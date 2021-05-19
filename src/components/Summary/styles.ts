@@ -14,7 +14,7 @@ export const Container = styled.div `
 
 
 
-    }
+    
     header {
         display: flex;
         align-items: center;
@@ -22,9 +22,16 @@ export const Container = styled.div `
     }
 
     strong { 
+        display: block;
         margin-top: 1rem;
         font-size: 2rem;
-        font-weight: normal;
+        font-weight: 500;
         line-height: 3rem;
     }
-`   
+
+    &.highlight-background {
+       background: var(--green) ;
+       color: #FFF;   
+    }
+    }
+`  ; 
