@@ -1,12 +1,25 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Container } from "./styles";
 
+
+
+interface Transaction {
+    id: number;
+    title: string;
+    amount: number;
+    type: string;
+    category: string;
+    createdAt: string;
+}
 export function TransactionsTable() {
+    const [transactions, setTransactions] = useState<Transaction[]>([])
+
+
     useEffect(() => {
         api.get('transactions')
-        .then(response => console.log(response.data))
+        .then(response => setTransactions(response.data.transactions))
     }, []);
     return (
         <Container>
@@ -20,30 +33,23 @@ export function TransactionsTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                  {transactions.map(transaction => (
+                      (
+                        <tr key={transaction.id}>
                         
-                    <td > Desenvolvimento de WebSite </td>
-                    <td className="deposit"> R$ 12.000 </td>
-                    <td> Desenvolvimento </td>
-                    <td> Data </td>
-                       
-                    </tr>
-                    <tr>
-                        
-                        <td> Desenvolvimento de WebSite </td>
-                        <td className="withdraw"> R$ 12.000 </td>
-                        <td> Desenvolvimento </td>
-                        <td> Data </td>
+                        <td >{transaction.title} </td>
+                        <td className={transaction.type}>{new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        }).format(transaction.amount )}</td>
+                        <td> {transaction.category}</td>
+                        <td> {new Intl.DateTimeFormat('pt-BR' ).format(
+                            new Date(transaction.createdAt))} </td>
                            
                         </tr>
-                        <tr>
-                        
-                        <td> Desenvolvimento de WebSite </td>
-                        <td> R$ 12.000 </td>
-                        <td> Desenvolvimento </td>
-                        <td> Data </td>
-                           
-                        </tr>
+                      )
+                  ))}           
+                    
                 </tbody>
             </table>
         </Container>
