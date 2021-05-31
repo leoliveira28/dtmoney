@@ -4,7 +4,7 @@ import  { createServer, Model } from 'miragejs'
 import { App } from './App';
 
 
-createServer({ 
+createServer({
   models: {
     transaction: Model,
   },
@@ -13,43 +13,43 @@ createServer({
     server.db.loadData({
       transactions: [
         {
-          id:1,
-          title: 'Freela',
-          type: 'deposit',
-          category: 'Dev',
+          id: 1,
+          title: "Freelance de website",
+          type: "deposit",
+          category: "Dev",
           amount: 6000,
-          createdAt: new Date('2021-02-12 09:00:00'),
+          createdAt: new Date(),
         },
         {
-          id:2,
-          title: 'Aluguel',
-          type: 'withdraw',
-          category: 'Casa',
-          amount: 600,
-          createdAt: new Date('2021-03-12 11:00:00'),
+          id: 2,
+          title: "Aluguel",
+          type: "withdraw",
+          category: "Casa",
+          amount: 1000,
+          createdAt: new Date(),
         },
       ],
-    })
+    });
   },
 
-  routes(){
-  this.namespace = 'api';
+  routes() {
+    this.namespace = "api";
 
-  this.get('/transactions', () => {
-    return this.schema.all('transaction')
-})
+    this.get('/transactions', () => {
+      return this.schema.all('transaction');
+    });
 
-this.post('/transactions', (schema, request) => {
-  const data = JSON.parse(request.requestBody)
-  return schema.create('transaction', data)
-})
-  }
-})
+    this.post("/transactions", (schema, request) => {
+      const data = JSON.parse(request.requestBody);
+
+      return schema.create("transaction", data);
+    });
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
